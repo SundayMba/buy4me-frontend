@@ -21,3 +21,9 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+src/Assets/product_*
+src/Assets/p1_product*
+src/Assets/all_product.js
+src/Assets/data.js
+src/Assets/new_collections.js
