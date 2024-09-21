@@ -45,7 +45,7 @@
   }
 }
 @media (max-width: 500px) {
-  .collections {
+  .collection {
     display: grid;
     justify-content: center;
     grid-template-columns: 1fr 1fr;
