@@ -12,7 +12,7 @@ const NewCollections = () => {
     <div className="new-collections container">
       <h1>NEW COLLECTIONS</h1>
       <hr />
-      <div className="collection">
+      <div className="collection" id="latest-col">
         {new_collection.map((item, index) => {
           return (
             <Item

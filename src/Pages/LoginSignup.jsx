@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../CSS/LoginSignup.css";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 const baseUrl = process.env.REACT_APP_BASE_URL;
 
 const LoginSignup = ({ setIsLoggedIn }) => {
@@ -13,16 +14,15 @@ const LoginSignup = ({ setIsLoggedIn }) => {
     password: "",
   });
 
+  const handleSignUp = () => {
+    setLogin("Sign Up");
+    navigate("/register");
+    handleBtnLogin();
+  };
+
   const handleLogin = () => {
-    setLogin((prev) => {
-      if (prev === "Sign Up") {
-        navigate("/login");
-        return "Login";
-      } else {
-        navigate("/register");
-        return "Sign Up";
-      }
-    });
+    setLogin("Login");
+    navigate("/login");
     handleBtnLogin();
   };
   const handleBtnLogin = () => {
@@ -34,9 +34,9 @@ const LoginSignup = ({ setIsLoggedIn }) => {
   };
 
   const submitForm = async (e) => {
-    console.log(formData);
+    // console.log(formData);
     setBtn(loginState);
-    if (btn === "Sign Up") {
+    if (btn === "Register") {
       const res = await fetch(`${baseUrl}/api/v1/register`, {
         method: "POST",
         headers: {
@@ -47,11 +47,14 @@ const LoginSignup = ({ setIsLoggedIn }) => {
       });
       const payload = await res.json();
       if (payload.status_code === 201) {
-        alert("User Registered successfully.");
-        navigate("/login");
-        setLogin("Login");
+        Swal.fire("Success", "User Registered successfully.", "success");
+        navigate("/");
+        // setLogin("Login");
+        localStorage.setItem("token", payload.token);
+        setIsLoggedIn(true);
+        // console.log(payload);
       } else if (payload.status_code === 409) {
-        alert(payload.error);
+        Swal.fire("Error!", payload.error, "error");
       } else if (payload.status_code === 400) {
         const password = payload.errors.password;
         const username = payload.errors.username;
@@ -66,7 +69,7 @@ const LoginSignup = ({ setIsLoggedIn }) => {
         if (email) {
           errors = [...errors, "\n", ...email];
         }
-        alert(errors);
+        Swal.fire("Error!", errors, "error");
       }
     } else {
       const { email, password } = formData;
@@ -86,15 +89,16 @@ const LoginSignup = ({ setIsLoggedIn }) => {
       if (payload.status_code === 200) {
         localStorage.setItem("token", payload.token);
         setIsLoggedIn(true);
-        console.log(payload);
-        alert(payload.message);
+        // console.log(payload);
+        // alert(payload.message);
+        Swal.fire("Success", "User Logged in successfully.", "success");
         if (payload.user.role === "admin") {
           navigate("/admin");
         } else {
           navigate("/");
         }
       } else {
-        alert(payload.message);
+        Swal.fire("Error!", payload.message, "error");
       }
     }
   };
@@ -142,7 +146,7 @@ const LoginSignup = ({ setIsLoggedIn }) => {
           ) : (
             <>
               Dont't Have an Account?
-              <span onClick={handleLogin}> Sign Up</span>
+              <span onClick={handleSignUp}> Sign Up</span>
             </>
           )}
         </p>
