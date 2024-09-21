@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import "./AdminMain.css";
 // import collection from "../../Assets/new_collections";
 import remove_icon from "../../Assets/cart_cross_icon.png";
+const baseUrl = process.env.REACT_APP_BASE_URL;
 
 const AdminMain = () => {
   const [products, setProducts] = useState([]);
 
   async function fetch_products() {
-    const res = await fetch("http://127.0.0.1:8000/api/v1/products", {
+    const res = await fetch(`${baseUrl}/api/v1/products`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -30,8 +31,8 @@ const AdminMain = () => {
     // console.log(image);
     const prod = products.find((product) => product.id === Number(productId));
     const { image } = prod;
-    const prod_url = `http://127.0.0.1:8000/api/v1/products/${productId}`;
-    const delete_url = "http://127.0.0.1:8000/api/v1/delete-image";
+    const prod_url = `${baseUrl}/api/v1/products/${productId}`;
+    const delete_url = `${baseUrl}/api/v1/delete-image`;
     const res = await fetch(prod_url, {
       method: "DELETE",
       headers: {

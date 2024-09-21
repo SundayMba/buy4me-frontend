@@ -2,6 +2,7 @@ import React, { createContext, useEffect, useState } from "react";
 // import all_product from "../Assets/all_product";
 
 export const ShopContext = createContext(null);
+const baseUrl = process.env.REACT_APP_BASE_URL;
 
 const ShopContextProvider = (props) => {
   const [all_product, setAllProducts] = useState([]);
@@ -10,7 +11,7 @@ const ShopContextProvider = (props) => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch(`http://127.0.0.1:8000/api/v1/products`, {
+        const res = await fetch(`${baseUrl}/api/v1/products`, {
           method: "GET",
           headers: {
             Accept: "application/json",

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./AddProduct.css";
 import upload from "../../Assets/upload.png";
+const baseUrl = process.env.REACT_APP_BASE_URL;
 
 const AddProduct = () => {
   const [photo, setPhoto] = useState(false);
@@ -33,18 +34,15 @@ const AddProduct = () => {
     const { section } = productDetails;
     const formData = new FormData();
     formData.append("image", photo);
-    const res = await fetch(
-      `http://127.0.0.1:8000/api/v1/upload-image/${section}`,
-      {
-        method: "POST",
-        body: formData,
-      }
-    );
+    const res = await fetch(`${baseUrl}/api/v1/upload-image/${section}`, {
+      method: "POST",
+      body: formData,
+    });
     data = await res.json();
     if (data) {
       const new_data = { ...productDetails };
       new_data.image = data.image_url;
-      const res = await fetch(`http://127.0.0.1:8000/api/v1/products`, {
+      const res = await fetch(`${baseUrl}/api/v1/products`, {
         method: "POST",
         headers: {
           Accept: "application/json",
