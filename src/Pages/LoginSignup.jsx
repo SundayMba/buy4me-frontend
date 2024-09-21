@@ -36,7 +36,7 @@ const LoginSignup = ({ setIsLoggedIn }) => {
     console.log(formData);
     setBtn(loginState);
     if (btn === "Sign Up") {
-      const res = await fetch("http://localhost:5000/api/v1/register", {
+      const res = await fetch("http://127.0.0.1:8000/api/v1/register", {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -69,7 +69,7 @@ const LoginSignup = ({ setIsLoggedIn }) => {
       }
     } else {
       const { email, password } = formData;
-      const url = "http://localhost:5000/api/v1/login";
+      const url = "http://127.0.0.1:8000/api/v1/login";
       const res = await fetch(url, {
         method: "POST",
         headers: {

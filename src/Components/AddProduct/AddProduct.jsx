@@ -34,7 +34,7 @@ const AddProduct = () => {
     const formData = new FormData();
     formData.append("image", photo);
     const res = await fetch(
-      `http://127.0.0.1:5000/api/v1/upload-image/${section}`,
+      `http://127.0.0.1:8000/api/v1/upload-image/${section}`,
       {
         method: "POST",
         body: formData,
@@ -44,7 +44,7 @@ const AddProduct = () => {
     if (data) {
       const new_data = { ...productDetails };
       new_data.image = data.image_url;
-      const res = await fetch(`http://127.0.0.1:5000/api/v1/products`, {
+      const res = await fetch(`http://127.0.0.1:8000/api/v1/products`, {
         method: "POST",
         headers: {
           Accept: "application/json",
