@@ -5,7 +5,8 @@ import Item from "../Item/Item";
 import { ShopContext } from "../../Context/ShopContext";
 
 const RelatedProducts = () => {
-  const { data_product } = useContext(ShopContext);
+  const { all_product } = useContext(ShopContext);
+  const data_product = all_product.slice(0, 4);
   return (
     <div className="relatedproducts">
       <h1>Related Products</h1>
